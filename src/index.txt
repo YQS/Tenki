@@ -1,0 +1,61 @@
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      users: []
+    }
+  };
+
+  //getUsersFromAPI() {
+  componentDidMount() {
+    fetch('http://localhost:8000/api/users', {
+      method: 'GET',
+      mode: 'cors',
+    }).then((response) => {
+      console.log('hello :D');
+      if (response.status >= 400) {
+        throw new Error('Bad response from server');
+      }
+      return response.json();
+    }).then((data) => {
+      console.log(data);
+      this.setState({users: data})
+    }).catch(err => {
+      console.log('hello :D');
+      console.log('caught it!', err);
+    })
+
+  };
+
+  showUsers() {
+    return this.state.users
+  };
+
+
+  render() {
+    return (
+      <div className="main">
+        <h1>Holla dolla</h1>
+        <div className="users">
+          {this.state.users.map(user =>
+            <p>a {user.ROWID} {user.NAME}</p>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+};
+
+
+
+//=====================================================================
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
