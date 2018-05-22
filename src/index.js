@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+
 import Landing from './Landing.js';
 import User from './User.js';
 import Board from './Board.js';
+import NotFound from './NotFound.js';
 
 
 class App extends Component {
@@ -42,17 +44,21 @@ class App extends Component {
         <h1>{this.state.title}</h1>
 
         <div className="content">
-          <Route exact path="/" render={() => {
-            return(<Redirect to="/login" />)
-          }}/>
-          <Route path="/login" component={Landing}  />
-          <Route exact path="/user/:username" component={User} />
-          <Route path="/user/:username/:board" component={Board} />
+          <Switch>
+            <Route exact path="/" render={() => {
+              return(<Redirect to="/login" />)
+            }}/>
+            <Route path="/login" component={Landing}  />
+            <Route path="/users/:bla/b/:board" component={Board} />
+            <Route exact path="/users/:username" component={User} />
+            <Route path="*" component={NotFound} />
+          </Switch>
         </div>
       </div>
     );
   };
 };
+//
 //<Route path="/login" render={this.LandingComponent}  />
 //<Route path="/login" component={Landing}  />
 //=========

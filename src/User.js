@@ -87,7 +87,10 @@ export default class User extends Component {
         <p>actuazliado: {this.state.updatedAt}</p>
         <p>TEST: {this.state.test} </p>
         <br/>
-        <BoardList userId={this.state.id} />
+        <BoardList
+          userId={this.state.id}
+          userName={this.state.user}
+        />
       </div>
     );
   };

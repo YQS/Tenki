@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 
 export default class BoardList extends Component {
   constructor() {
     super();
     this.state = {
       userId: 'def',
+      userName: 'def',
       boardsList: []
     };
   };
@@ -12,12 +14,15 @@ export default class BoardList extends Component {
   componentDidMount() {
     //console.log('PROPS FROM BOARD');
     //console.log(this.props);
-    //this.setState({userId: this.props.userId})
+    this.setState({userName: this.props.userName})
   };
 
   componentWillReceiveProps(nextProps) {
     console.log('WILL RECIVE');
-    this.setState({ userId: nextProps.userId });
+    this.setState({
+      userId: nextProps.userId,
+      userName: nextProps.userName
+    });
     console.log(nextProps.userId);
     if (nextProps.userId !== '') {
       this.getBoards(nextProps.userId);
@@ -46,7 +51,7 @@ export default class BoardList extends Component {
         <p> Board with userId: {this.state.userId} </p>
         <ul>
           {this.state.boardsList.map((board) =>
-            <p key={board.id}>{board.name}</p>)}
+            <Link to={"/users/"+this.state.userName+"/b/"+board.name} key={board.id}>{board.name}</Link>)}
         </ul>
       </div>
     );

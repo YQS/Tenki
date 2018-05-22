@@ -20,7 +20,7 @@ export default class Landing extends Component {
     //console.log(event.target.value);
     //this.props.updateTitle(this.state.user);
     console.log(this.props);
-    this.props.history.push("/user/"+this.state.user);
+    this.props.history.push("/users/"+this.state.user);
   };
 
   handleChange = (event) => {
