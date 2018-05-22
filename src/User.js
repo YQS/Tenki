@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Fuse from 'fuse.js';
+import BoardList from './BoardList.js'
 
 
 export default class User extends Component {
@@ -35,7 +36,7 @@ export default class User extends Component {
       }
       return response.json();
     }).then((usersList) => {
-      console.log(usersList);
+      //console.log(usersList);
       var searchUser = new Fuse(usersList, {
         keys: ['name'],
         threshold: 0.0,
@@ -61,7 +62,7 @@ export default class User extends Component {
       }
       return response.json();
     }).then((foundUser) => {
-      console.log('UPDATING STATES');
+      //console.log('UPDATING STATES');
       console.log(foundUser);
       this.setState({
         user: foundUser.name,
@@ -74,37 +75,6 @@ export default class User extends Component {
 
 
     })
-      /*var foundUsers = response.json().filter(function(item) {
-          return item.name === name;
-      });
-      console.log('list of users found with name ' + name);
-      console.log(foundUsers);
-      */
-      /*
-      fetch('http://localhost:8000/api/users/'+foundUsers[0].id, {
-        method: 'GET',
-        mode: 'cors',
-
-      }).then((response) => {
-        if (response.status >= 400) {
-          throw new Error('Bad response from server');
-        }
-        //console.log(response.json());
-        return response.json();
-      }).then((data) => {
-        //data es un array con dos datos
-        //  0 es el objeto
-        //  1 es un boolean que indica si tuvo que crear o no el objeto
-        console.log(data[0]);;
-        this.setState({
-          user: data[0].name,
-          id: data[0].id,
-          createdAt: data[0].createdAt,
-          updatedAt: data[0].updatedAt
-        });
-      })
-      */
-    //})
   };
 
 
@@ -116,6 +86,8 @@ export default class User extends Component {
         <p>creado: {this.state.createdAt}</p>
         <p>actuazliado: {this.state.updatedAt}</p>
         <p>TEST: {this.state.test} </p>
+        <br/>
+        <BoardList userId={this.state.id} />
       </div>
     );
   };

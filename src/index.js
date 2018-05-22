@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
-import Landing from './Landing.js'
-import User from './User.js'
+import Landing from './Landing.js';
+import User from './User.js';
+import Board from './Board.js';
 
 
 class App extends Component {
@@ -45,7 +46,8 @@ class App extends Component {
             return(<Redirect to="/login" />)
           }}/>
           <Route path="/login" component={Landing}  />
-          <Route path="/user/:username" component={User} />
+          <Route exact path="/user/:username" component={User} />
+          <Route path="/user/:username/:board" component={Board} />
         </div>
       </div>
     );
