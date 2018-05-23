@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
+import InterestList  from './InterestList.js';
 
 
 export default class Board extends Component {
   constructor() {
     super();
     this.state = {
-      boardName: 'None'
+      boardName: 'None',
+      boardId: 1,
+      userId: 1
+
     }
   };
 
@@ -16,7 +20,7 @@ export default class Board extends Component {
   //componentWillReceiveProps
 
   render() {
-    const boardExists = false;
+    const boardExists = true;
 
 
     /*return (
@@ -27,6 +31,11 @@ export default class Board extends Component {
         <div className="board">
           <h2>this is a board </h2>
           <p>{this.state.boardName}</p>
+          <InterestList
+            userId={this.state.userId}
+            boardId= {this.state.boardId}
+            boardName={this.state.boardName}
+          />
         </div>
       ) : (
         <h2>board not found ({this.state.boardName})</h2>
