@@ -1,23 +1,59 @@
 import React, {Component} from 'react';
 import InterestList  from './InterestList.js';
 
+function getInitialState(dataName) {
+  var data = localStorage.getItem( dataName );
+  console.log('return initial state of '+dataName+': '+data);
+  return data;
+};
+
+function setStorageState(dataName, data) {
+  localStorage.setItem(dataName, JSON.stringify(data));
+  console.log('storing '+dataName+': '+data);
+}
 
 export default class Board extends Component {
   constructor() {
     super();
-    this.state = {
-      boardName: 'None',
-      boardId: 1,
-      userId: 1
-
-    }
+    /*this.state = {
+      userId: getInitialState('userId'),
+      userName: getInitialState('userName'),
+      boardId: getInitialState('boardId'),
+      boardName: getInitialState('boardName')
+    }*/
+    this.state = getInitialState('state');
   };
 
   componentDidMount() {
     console.log('mounting board');
-    this.setState({boardName: this.props.match.params.board})
+    console.log(this.props);
+    this.setState({
+      boardName: this.props.match.params.board,
+      username: this.props.match.params.username
+    })
+    if (this.props.location.state) {
+      this.setState({
+        //from Link
+        //historyState: this.props.match.location.state,
+        userId: this.props.location.state.userId,
+        userName: this.props.location.state.userName,
+        boardId: this.props.location.state.boardId,
+        boardName: this.props.location.state.boardName
+      });
+      setStorageState('state', this.state);
+    }
   };
-  //componentWillReceiveProps
+
+  componentWillReceiveProps(nextProps) {
+    console.log('WILL RECIVE IN BOARD');
+    this.setState({
+      userId: nextProps.userId,
+      userName: nextProps.userName,
+      boardId: nextProps.boardId,
+      boardName: nextProps.boardName
+    });
+    setStorageState('state', this.state);
+  };
 
   render() {
     const boardExists = true;
@@ -30,9 +66,10 @@ export default class Board extends Component {
       boardExists ? (
         <div className="board">
           <h2>this is a board </h2>
-          <p>{this.state.boardName}</p>
+          <p>with name: {this.state.boardName} ({this.state.boardId})</p>
           <InterestList
             userId={this.state.userId}
+            userName={this.state.userName}
             boardId= {this.state.boardId}
             boardName={this.state.boardName}
           />

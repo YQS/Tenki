@@ -49,7 +49,7 @@ class App extends Component {
               return(<Redirect to="/login" />)
             }}/>
             <Route path="/login" component={Landing}  />
-            <Route path="/users/:bla/b/:board" component={Board} />
+            <Route path="/users/:username/b/:board" component={Board} />
             <Route exact path="/users/:username" component={User} />
             <Route path="*" component={NotFound} />
           </Switch>
