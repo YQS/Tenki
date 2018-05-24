@@ -49,7 +49,30 @@ export default class User extends Component {
         myId = searchUser.search(name)[0];
       } else {
         console.log('name not found');
-        myId = name;
+        //myId = name;
+        //creo nuevo usuario
+        myId = fetch('http://localhost:8000/api/users', {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            //'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            //'Content-Type': 'text/plain'
+          },
+          body: JSON.stringify({
+            name: name
+          })
+        }).then((response) => {
+          if (response.status >= 400) {
+            throw new Error('Bad response from server');
+          }
+          return response.json();
+        }).then((newUser) => {
+          return newUser.id;
+        }).catch((err) => {
+          console.log('ERROR CREATING USER');
+          console.log(err);
+        })
       };
       return myId
     }).then((myId) => {
