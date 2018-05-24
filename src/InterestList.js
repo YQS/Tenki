@@ -113,22 +113,19 @@ export default class InterestList extends Component {
     return (
       <div className="interests">
         <p> Interests with boardId: {this.state.boardId} </p>
-        <ul>
-          {this.state.interestList.map((interest) =>
-            <p key={interest.id}> {interest.name} - {interest.place.name} </p>
-          )}
-        </ul>
-
         <form onSubmit={this.createNewInterest}>
           <label>Nuevo interes</label><br/>
           <label>Nombre </label>
           <input type="text" label="hey" onChange={this.updateNewInterest}/><br/>
-          <label>Lugar </label>
           <SearchableDropdown updateNewPlace={this.updateNewPlace}/>
           <input type="submit" value="Crear"/>
         </form>
-
-
+        <br />
+        <ul>
+          {this.state.interestList.map((interest) =>
+            <p key={interest.id}> {interest.name} - {interest.place.name} : Temperatura {interest.place.climates[0].temp} C</p>
+          )}
+        </ul>
       </div>
     );
   };

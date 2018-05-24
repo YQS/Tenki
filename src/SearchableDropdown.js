@@ -42,7 +42,7 @@ export default class SearchableDropdown extends Component {
     return (
       <div>
         <SimpleSelect
-          placeholder="Select an option"
+          placeholder="Elija un lugar"
           ref = "select"
           options = {this.state.options}
           search = {this.state.search}
@@ -127,7 +127,7 @@ export default class SearchableDropdown extends Component {
           renderNoResultsFound = {function(value, search){
               return <div className="no-results-found" style={{fontSize: 13}}>
                   {typeof this.req == "undefined" ?
-                  "type a few characters to kick off remote search":"No results found"}
+                  "Comience a escribir para disparar la búsqueda...":"No se hallaron resultados"}
               </div>
           }}
 

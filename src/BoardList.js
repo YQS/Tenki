@@ -84,7 +84,12 @@ export default class BoardList extends Component {
   render() {
     return (
       <div className="boards">
-        <p> Board with userId: {this.state.userId} </p>
+        <form onSubmit={this.createNewBoard}>
+          <label>Nuevo tablero</label>
+          <input type="text" onChange={this.updateNewBoard}/>
+        </form>
+        <br />
+        <p> Boards with userId: {this.state.userId} </p>
         <ul>
           {this.state.boardsList.map((board) =>
             <div key={board.id} className="boardList">
@@ -103,12 +108,6 @@ export default class BoardList extends Component {
             </div>
           )}
         </ul>
-        <br />
-
-        <form onSubmit={this.createNewBoard}>
-          <label>Nuevo tablero</label>
-          <input type="text" onChange={this.updateNewBoard}/>
-        </form>
       </div>
     );
   }
