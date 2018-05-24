@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+//import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './styles/style.css'
 
 import Landing from './Landing.js';
 import User from './User.js';
 import Board from './Board.js';
 import NotFound from './NotFound.js';
+import StorageTest from './StorageTest.js';
 
 
 class App extends Component {
@@ -48,6 +51,7 @@ class App extends Component {
             <Route exact path="/" render={() => {
               return(<Redirect to="/login" />)
             }}/>
+            <Route path="/test" component={StorageTest}  />
             <Route path="/login" component={Landing}  />
             <Route path="/users/:username/b/:board" component={Board} />
             <Route exact path="/users/:username" component={User} />
@@ -63,9 +67,9 @@ class App extends Component {
 //<Route path="/login" component={Landing}  />
 //=========
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   ,
   document.getElementById('root')
 );

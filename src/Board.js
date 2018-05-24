@@ -15,13 +15,24 @@ function setStorageState(dataName, data) {
 export default class Board extends Component {
   constructor() {
     super();
+    /*var oldState = getInitialState('state');
+    if (oldState) {
+      this.state = oldState
+    } else {*/
+      this.state = {
+        userId: getInitialState('userId'),
+        userName: getInitialState('userName'),
+        //boardId: '',
+        boardId: getInitialState('boardId'),
+        boardName: getInitialState('boardName')
+      }
+    //}
     /*this.state = {
       userId: getInitialState('userId'),
       userName: getInitialState('userName'),
       boardId: getInitialState('boardId'),
       boardName: getInitialState('boardName')
     }*/
-    this.state = getInitialState('state');
   };
 
   componentDidMount() {
@@ -30,8 +41,12 @@ export default class Board extends Component {
     this.setState({
       boardName: this.props.match.params.board,
       username: this.props.match.params.username
-    })
+    });
     if (this.props.location.state) {
+      setStorageState('userId', this.props.location.state.userId);
+      setStorageState('userName', this.props.location.state.userName);
+      setStorageState('boardId', this.props.location.state.boardId);
+      setStorageState('boardName', this.props.location.state.boardName);
       this.setState({
         //from Link
         //historyState: this.props.match.location.state,
@@ -40,7 +55,6 @@ export default class Board extends Component {
         boardId: this.props.location.state.boardId,
         boardName: this.props.location.state.boardName
       });
-      setStorageState('state', this.state);
     }
   };
 

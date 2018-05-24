@@ -55,11 +55,17 @@ export default class BoardList extends Component {
     console.log(this.state.userId);
     var apiURL = 'http://localhost:8000/api/users/'+this.state.userId+'/boards'
     console.log(apiURL);
+    var fetchBody = JSON.stringify({
+      name: this.state.newBoardName
+    });
+    console.log(fetchBody);
     fetch(apiURL, {
       method: 'POST',
+      mode: 'cors',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        //'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        //'Content-Type': 'text/plain'
       },
       body: JSON.stringify({
         name: this.state.newBoardName
@@ -69,6 +75,9 @@ export default class BoardList extends Component {
         throw new Error('Bad response from server');
       }
       return response.json();
+    }).catch((err) => {
+      console.log('ERROR CREATING BOARD');
+      console.log(err);
     })
   };
 
@@ -88,7 +97,7 @@ export default class BoardList extends Component {
                       boardId: board.id,
                       boardName: board.name
                     }
-                  }}                
+                  }}
               >{board.name}</Link>
               <br />
             </div>

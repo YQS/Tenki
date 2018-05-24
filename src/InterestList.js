@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
+import SearchableDropdown from './SearchableDropdown';
 
 function getInitialState(dataName) {
   return localStorage.getItem( dataName ) || '';
@@ -22,6 +23,7 @@ export default class InterestList extends Component {
       boardId: '',
       boardName: '',
       newInterestName: '',
+      newPlaceName: '',
       interestList: []
     };
   };
@@ -30,7 +32,7 @@ export default class InterestList extends Component {
     //console.log('PROPS FROM BOARD');
     //console.log(this.props);
     this.setState({boardName: this.props.boardName});
-    setStorageState('boardName', this.state.boardName);
+    //setStorageState('boardName', this.state.boardName);
   };
 
   componentWillReceiveProps(nextProps) {
@@ -40,9 +42,9 @@ export default class InterestList extends Component {
       boardId: nextProps.boardId,
       boardName: nextProps.boardName
     });
-    setStorageState('userId', this.state.userId);
-    setStorageState('boardId', this.state.boardId);
-    setStorageState('boardName', this.state.boardName);
+    //setStorageState('userId', this.state.userId);
+    //setStorageState('boardId', this.state.boardId);
+    //setStorageState('boardName', this.state.boardName);
     console.log(nextProps);
     if (nextProps.boardId !== '') {
       this.getInterests(nextProps.userId, nextProps.boardId);
@@ -68,6 +70,12 @@ export default class InterestList extends Component {
     this.setState({newInterestName: event.target.value})
   };
 
+  updateNewPlace = (event) => {
+    console.log(event);
+    //this.setState({newPlaceName: event.target.value})
+    this.setState({newPlaceName: event})
+  };
+
   createNewInterest = (event) => {
     var apiURL = 'http://localhost:8000/api/users/'
     apiURL += this.state.userId
@@ -75,20 +83,29 @@ export default class InterestList extends Component {
     apiURL += this.state.boardId
     apiURL += '/interests'
     console.log(apiURL);
+    console.log(this.state.newInterestName);
     fetch(apiURL, {
       method: 'POST',
+      mode: 'cors',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        //'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: this.state.newInterestName
+        name: this.state.newInterestName,
+        place: this.state.newPlaceName
       })
     }).then((response) => {
+      console.log('SHOWING RESPONSE');
+      console.log(response);
       if (response.status >= 400) {
         throw new Error('Bad response from server');
       }
+      console.log('finished post fetch');
       return response.json();
+    }).catch((err) => {
+      console.log('ERROR FOUND WHILE CREATING INTEREST');
+      console.log(err);
     })
   };
 
@@ -103,9 +120,15 @@ export default class InterestList extends Component {
         </ul>
 
         <form onSubmit={this.createNewInterest}>
-          <label>Nuevo interes</label>
-          <input type="text" onChange={this.updateNewInterest}/>
+          <label>Nuevo interes</label><br/>
+          <label>Nombre </label>
+          <input type="text" label="hey" onChange={this.updateNewInterest}/><br/>
+          <label>Lugar </label>
+          <SearchableDropdown updateNewPlace={this.updateNewPlace}/>
+          <input type="submit" value="Crear"/>
         </form>
+
+
       </div>
     );
   };
